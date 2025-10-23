@@ -1,0 +1,242 @@
+import '../models/product_model.dart';
+
+class DummyData {
+  static List<ProductModel> products = [
+    // Men's Collection
+    ProductModel(
+      id: '1',
+      name: 'Classic Cotton Shirt',
+      brand: 'H&M',
+      price: 1299.0,
+      originalPrice: 1999.0,
+      imageUrl: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=400',
+      category: 'Men',
+      rating: 4.2,
+      reviewCount: 156,
+      description: 'A classic cotton shirt perfect for formal and casual occasions. Made from 100% cotton with a comfortable fit.',
+      sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+      colors: ['White', 'Blue', 'Black'],
+    ),
+    ProductModel(
+      id: '2',
+      name: 'Slim Fit Jeans',
+      brand: 'Levi\'s',
+      price: 2499.0,
+      originalPrice: 3499.0,
+      imageUrl: 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=400',
+      category: 'Men',
+      rating: 4.5,
+      reviewCount: 203,
+      description: 'Premium quality slim fit jeans with stretch fabric for ultimate comfort and style.',
+      sizes: ['28', '30', '32', '34', '36'],
+      colors: ['Dark Blue', 'Light Blue', 'Black'],
+    ),
+    ProductModel(
+      id: '3',
+      name: 'Casual Sneakers',
+      brand: 'Nike',
+      price: 3999.0,
+      originalPrice: 5499.0,
+      imageUrl: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400',
+      category: 'Men',
+      rating: 4.7,
+      reviewCount: 89,
+      description: 'Comfortable casual sneakers perfect for everyday wear. Features breathable mesh upper and cushioned sole.',
+      sizes: ['7', '8', '9', '10', '11'],
+      colors: ['White', 'Black', 'Grey'],
+    ),
+
+    // Women's Collection
+    ProductModel(
+      id: '4',
+      name: 'Floral Summer Dress',
+      brand: 'Zara',
+      price: 1899.0,
+      originalPrice: 2799.0,
+      imageUrl: 'https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=400',
+      category: 'Women',
+      rating: 4.3,
+      reviewCount: 124,
+      description: 'Beautiful floral summer dress made from lightweight fabric. Perfect for casual outings and parties.',
+      sizes: ['XS', 'S', 'M', 'L', 'XL'],
+      colors: ['Pink', 'Yellow', 'White'],
+    ),
+    ProductModel(
+      id: '5',
+      name: 'High Waist Jeans',
+      brand: 'Forever 21',
+      price: 1799.0,
+      originalPrice: 2499.0,
+      imageUrl: 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=400',
+      category: 'Women',
+      rating: 4.1,
+      reviewCount: 178,
+      description: 'Trendy high waist jeans with a flattering fit. Made from premium denim with stretch for comfort.',
+      sizes: ['24', '26', '28', '30', '32'],
+      colors: ['Blue', 'Black', 'Light Blue'],
+    ),
+    ProductModel(
+      id: '6',
+      name: 'Elegant Heels',
+      brand: 'Steve Madden',
+      price: 2999.0,
+      originalPrice: 4299.0,
+      imageUrl: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400',
+      category: 'Women',
+      rating: 4.4,
+      reviewCount: 67,
+      description: 'Elegant high heels perfect for formal occasions. Features comfortable padding and stylish design.',
+      sizes: ['5', '6', '7', '8', '9'],
+      colors: ['Black', 'Nude', 'Red'],
+    ),
+
+    // Kids Collection
+    ProductModel(
+      id: '7',
+      name: 'Kids Cotton T-Shirt',
+      brand: 'Gap Kids',
+      price: 699.0,
+      originalPrice: 999.0,
+      imageUrl: 'https://images.unsplash.com/photo-1503944583220-79d8926ad5e2?w=400',
+      category: 'Kids',
+      rating: 4.6,
+      reviewCount: 92,
+      description: 'Soft and comfortable cotton t-shirt for kids. Available in fun colors and designs.',
+      sizes: ['2-3Y', '4-5Y', '6-7Y', '8-9Y', '10-11Y'],
+      colors: ['Red', 'Blue', 'Yellow', 'Green'],
+    ),
+    ProductModel(
+      id: '8',
+      name: 'Kids Denim Jacket',
+      brand: 'H&M Kids',
+      price: 1299.0,
+      originalPrice: 1799.0,
+      imageUrl: 'https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?w=400',
+      category: 'Kids',
+      rating: 4.2,
+      reviewCount: 45,
+      description: 'Stylish denim jacket for kids. Perfect for layering and casual wear.',
+      sizes: ['2-3Y', '4-5Y', '6-7Y', '8-9Y'],
+      colors: ['Light Blue', 'Dark Blue'],
+    ),
+
+    // Beauty Collection
+    ProductModel(
+      id: '9',
+      name: 'Matte Lipstick Set',
+      brand: 'MAC',
+      price: 2499.0,
+      originalPrice: 3299.0,
+      imageUrl: 'https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=400',
+      category: 'Beauty',
+      rating: 4.8,
+      reviewCount: 234,
+      description: 'Long-lasting matte lipstick set with 5 popular shades. Highly pigmented and comfortable to wear.',
+      sizes: ['Standard'],
+      colors: ['Red', 'Pink', 'Nude', 'Berry', 'Coral'],
+    ),
+    ProductModel(
+      id: '10',
+      name: 'Face Serum',
+      brand: 'The Ordinary',
+      price: 899.0,
+      originalPrice: 1299.0,
+      imageUrl: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400',
+      category: 'Beauty',
+      rating: 4.5,
+      reviewCount: 167,
+      description: 'Hydrating face serum with hyaluronic acid. Suitable for all skin types.',
+      sizes: ['30ml'],
+      colors: ['Clear'],
+    ),
+
+    // Additional Products
+    ProductModel(
+      id: '11',
+      name: 'Leather Wallet',
+      brand: 'Tommy Hilfiger',
+      price: 1599.0,
+      originalPrice: 2299.0,
+      imageUrl: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400',
+      category: 'Men',
+      rating: 4.3,
+      reviewCount: 78,
+      description: 'Premium leather wallet with multiple card slots and compartments.',
+      sizes: ['Standard'],
+      colors: ['Brown', 'Black'],
+    ),
+    ProductModel(
+      id: '12',
+      name: 'Silk Scarf',
+      brand: 'Hermès',
+      price: 3999.0,
+      originalPrice: 5999.0,
+      imageUrl: 'https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=400',
+      category: 'Women',
+      rating: 4.9,
+      reviewCount: 56,
+      description: 'Luxurious silk scarf with elegant patterns. Perfect accessory for any outfit.',
+      sizes: ['90x90cm'],
+      colors: ['Blue', 'Pink', 'Gold'],
+    ),
+    ProductModel(
+      id: '13',
+      name: 'Sports Watch',
+      brand: 'Casio',
+      price: 2799.0,
+      originalPrice: 3799.0,
+      imageUrl: 'https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=400',
+      category: 'Men',
+      rating: 4.4,
+      reviewCount: 112,
+      description: 'Durable sports watch with water resistance and multiple features.',
+      sizes: ['Standard'],
+      colors: ['Black', 'Blue', 'Silver'],
+    ),
+    ProductModel(
+      id: '14',
+      name: 'Summer Sandals',
+      brand: 'Crocs',
+      price: 1499.0,
+      originalPrice: 1999.0,
+      imageUrl: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400',
+      category: 'Kids',
+      rating: 4.1,
+      reviewCount: 89,
+      description: 'Comfortable summer sandals for kids. Lightweight and easy to clean.',
+      sizes: ['6', '7', '8', '9', '10'],
+      colors: ['Pink', 'Blue', 'Green'],
+    ),
+    ProductModel(
+      id: '15',
+      name: 'Foundation Palette',
+      brand: 'Maybelline',
+      price: 1299.0,
+      originalPrice: 1799.0,
+      imageUrl: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400',
+      category: 'Beauty',
+      rating: 4.2,
+      reviewCount: 145,
+      description: 'Complete foundation palette with multiple shades for perfect color matching.',
+      sizes: ['Standard'],
+      colors: ['Light', 'Medium', 'Dark'],
+    ),
+  ];
+
+  static List<String> categories = ['All', 'Men', 'Women', 'Kids', 'Beauty'];
+
+  static List<ProductModel> getProductsByCategory(String category) {
+    if (category == 'All') {
+      return products;
+    }
+    return products.where((product) => product.category == category).toList();
+  }
+
+  static ProductModel? getProductById(String id) {
+    try {
+      return products.firstWhere((product) => product.id == id);
+    } catch (e) {
+      return null;
+    }
+  }
+}
