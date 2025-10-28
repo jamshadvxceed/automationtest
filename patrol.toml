@@ -1,0 +1,9 @@
+[app]
+name = "Vxceed"
+
+[android]
+package_name = "com.example.automationtest"
+
+[ios]
+bundle_id = "com.example.automationtest"
+app_name = "Vxceed"
