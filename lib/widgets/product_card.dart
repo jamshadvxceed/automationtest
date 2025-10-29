@@ -11,11 +11,7 @@ class ProductCard extends StatelessWidget {
   final ProductModel product;
   final VoidCallback? onTap;
 
-  const ProductCard({
-    super.key,
-    required this.product,
-    this.onTap,
-  });
+  const ProductCard({super.key, required this.product, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +24,7 @@ class ProductCard extends StatelessWidget {
     }
 
     return GestureDetector(
+      key: Key('product_card_${product.id}'),
       onTap: onTap ?? () => AppRoutes.toProductDetail(product.id),
       child: Container(
         decoration: BoxDecoration(
@@ -53,12 +50,17 @@ class ProductCard extends StatelessWidget {
                   Hero(
                     tag: 'product-${product.id}',
                     child: Container(
+                      key: Key('product_image_${product.id}'),
                       width: double.infinity,
                       decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(8),
+                        ),
                       ),
                       child: ClipRRect(
-                        borderRadius: const BorderRadius.vertical(top: Radius.circular(8)),
+                        borderRadius: const BorderRadius.vertical(
+                          top: Radius.circular(8),
+                        ),
                         child: CachedNetworkImage(
                           imageUrl: product.imageUrl,
                           fit: BoxFit.cover,
@@ -87,43 +89,59 @@ class ProductCard extends StatelessWidget {
                   Positioned(
                     top: 8,
                     right: 8,
-                    child: productController != null ? Obx(() {
-                      final isFavorite = productController!.allProducts
-                          .firstWhere((p) => p.id == product.id, orElse: () => product)
-                          .isFavorite;
-                      
-                      return GestureDetector(
-                        onTap: () => productController!.toggleFavorite(product.id),
-                        child: Container(
-                          padding: const EdgeInsets.all(6),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.9),
-                            shape: BoxShape.circle,
+                    child: productController != null
+                        ? Obx(() {
+                            final isFavorite = productController!.allProducts
+                                .firstWhere(
+                                  (p) => p.id == product.id,
+                                  orElse: () => product,
+                                )
+                                .isFavorite;
+
+                            return GestureDetector(
+                              key: Key('favorite_button_${product.id}'),
+                              onTap: () =>
+                                  productController!.toggleFavorite(product.id),
+                              child: Container(
+                                padding: const EdgeInsets.all(6),
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withOpacity(0.9),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(
+                                  isFavorite
+                                      ? Icons.favorite
+                                      : Icons.favorite_border,
+                                  color: isFavorite
+                                      ? AppColors.primary
+                                      : AppColors.textSecondary,
+                                  size: 18,
+                                ),
+                              ),
+                            );
+                          })
+                        : GestureDetector(
+                            key: Key('favorite_button_${product.id}'),
+                            onTap: () {
+                              // Fallback when controller not available
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(6),
+                              decoration: BoxDecoration(
+                                color: Colors.white.withOpacity(0.9),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                product.isFavorite
+                                    ? Icons.favorite
+                                    : Icons.favorite_border,
+                                color: product.isFavorite
+                                    ? AppColors.primary
+                                    : AppColors.textSecondary,
+                                size: 18,
+                              ),
+                            ),
                           ),
-                          child: Icon(
-                            isFavorite ? Icons.favorite : Icons.favorite_border,
-                            color: isFavorite ? AppColors.primary : AppColors.textSecondary,
-                            size: 18,
-                          ),
-                        ),
-                      );
-                    }) : GestureDetector(
-                      onTap: () {
-                        // Fallback when controller not available
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(6),
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.9),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(
-                          product.isFavorite ? Icons.favorite : Icons.favorite_border,
-                          color: product.isFavorite ? AppColors.primary : AppColors.textSecondary,
-                          size: 18,
-                        ),
-                      ),
-                    ),
                   ),
                   // Discount badge
                   if (product.discountPercentage > 0)
@@ -131,7 +149,10 @@ class ProductCard extends StatelessWidget {
                       top: 8,
                       left: 8,
                       child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 6,
+                          vertical: 2,
+                        ),
                         decoration: BoxDecoration(
                           color: AppColors.discount,
                           borderRadius: BorderRadius.circular(4),
@@ -179,67 +200,70 @@ class ProductCard extends StatelessWidget {
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
-                    const SizedBox(height: 4),
-                    // Price and rating row
-                    Row(
-                      children: [
-                        // Price
-                        Flexible(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
+                  const SizedBox(height: 4),
+                  // Price and rating row
+                  Row(
+                    children: [
+                      // Price
+                      Flexible(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '₹${product.price.toInt()}',
+                              style: GoogleFonts.poppins(
+                                fontSize: 13,
+                                color: AppColors.textPrimary,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            if (product.originalPrice > product.price)
                               Text(
-                                '₹${product.price.toInt()}',
+                                '₹${product.originalPrice.toInt()}',
                                 style: GoogleFonts.poppins(
-                                  fontSize: 13,
-                                  color: AppColors.textPrimary,
-                                  fontWeight: FontWeight.w600,
+                                  fontSize: 10,
+                                  color: AppColors.textLight,
+                                  decoration: TextDecoration.lineThrough,
                                 ),
                               ),
-                              if (product.originalPrice > product.price)
-                                Text(
-                                  '₹${product.originalPrice.toInt()}',
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 10,
-                                    color: AppColors.textLight,
-                                    decoration: TextDecoration.lineThrough,
-                                  ),
-                                ),
-                            ],
-                          ),
+                          ],
                         ),
-                        // Rating
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-                          decoration: BoxDecoration(
-                            color: AppColors.rating,
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const Icon(
-                                Icons.star,
+                      ),
+                      // Rating
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 4,
+                          vertical: 2,
+                        ),
+                        decoration: BoxDecoration(
+                          color: AppColors.rating,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(
+                              Icons.star,
+                              color: Colors.white,
+                              size: 10,
+                            ),
+                            const SizedBox(width: 2),
+                            Text(
+                              product.rating.toString(),
+                              style: GoogleFonts.poppins(
                                 color: Colors.white,
-                                size: 10,
+                                fontSize: 9,
+                                fontWeight: FontWeight.w500,
                               ),
-                              const SizedBox(width: 2),
-                              Text(
-                                product.rating.toString(),
-                                style: GoogleFonts.poppins(
-                                  color: Colors.white,
-                                  fontSize: 9,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
+            ),
           ],
         ),
       ),

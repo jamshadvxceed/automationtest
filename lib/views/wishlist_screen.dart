@@ -13,7 +13,8 @@ class WishlistScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final WishlistController wishlistController = Get.find<WishlistController>();
+    final WishlistController wishlistController =
+        Get.find<WishlistController>();
     final CartController cartController = Get.find<CartController>();
 
     return Scaffold(
@@ -21,61 +22,65 @@ class WishlistScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'My Wishlist',
-          style: GoogleFonts.poppins(
-            fontWeight: FontWeight.w600,
-          ),
+          style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
         ),
         actions: [
-          Obx(() => wishlistController.wishlistItems.isNotEmpty
-              ? PopupMenuButton<String>(
-                  onSelected: (value) {
-                    switch (value) {
-                      case 'move_all':
-                        wishlistController.moveAllToCart();
-                        break;
-                      case 'clear_all':
-                        _showClearWishlistDialog(context, wishlistController);
-                        break;
-                    }
-                  },
-                  itemBuilder: (context) => [
-                    PopupMenuItem(
-                      value: 'move_all',
-                      child: Row(
-                        children: [
-                          const Icon(Icons.shopping_cart, size: 20),
-                          const SizedBox(width: 8),
-                          Text(
-                            'Move All to Cart',
-                            style: GoogleFonts.poppins(),
-                          ),
-                        ],
+          Obx(
+            () => wishlistController.wishlistItems.isNotEmpty
+                ? PopupMenuButton<String>(
+                    onSelected: (value) {
+                      switch (value) {
+                        case 'move_all':
+                          wishlistController.moveAllToCart();
+                          break;
+                        case 'clear_all':
+                          _showClearWishlistDialog(context, wishlistController);
+                          break;
+                      }
+                    },
+                    itemBuilder: (context) => [
+                      PopupMenuItem(
+                        value: 'move_all',
+                        child: Row(
+                          children: [
+                            const Icon(Icons.shopping_cart, size: 20),
+                            const SizedBox(width: 8),
+                            Text(
+                              'Move All to Cart',
+                              style: GoogleFonts.poppins(),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    PopupMenuItem(
-                      value: 'clear_all',
-                      child: Row(
-                        children: [
-                          const Icon(Icons.clear_all, size: 20, color: AppColors.error),
-                          const SizedBox(width: 8),
-                          Text(
-                            'Clear Wishlist',
-                            style: GoogleFonts.poppins(color: AppColors.error),
-                          ),
-                        ],
+                      PopupMenuItem(
+                        value: 'clear_all',
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.clear_all,
+                              size: 20,
+                              color: AppColors.error,
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              'Clear Wishlist',
+                              style: GoogleFonts.poppins(
+                                color: AppColors.error,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                )
-              : const SizedBox()),
+                    ],
+                  )
+                : const SizedBox(),
+          ),
         ],
       ),
       body: Obx(() {
         if (wishlistController.isLoading.value) {
           return const Center(
-            child: CircularProgressIndicator(
-              color: AppColors.primary,
-            ),
+            child: CircularProgressIndicator(color: AppColors.primary),
           );
         }
 
@@ -108,12 +113,14 @@ class WishlistScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 24),
                 CustomButton(
+                  key: const Key('start_shopping_button'),
                   text: 'Start Shopping',
                   onPressed: () => Get.back(),
                   width: 200,
                 ),
                 const SizedBox(height: 16),
                 CustomButton(
+                  key: const Key('refresh_wishlist_button'),
                   text: 'Refresh Wishlist',
                   onPressed: () => wishlistController.loadWishlist(),
                   isOutlined: true,
@@ -131,11 +138,7 @@ class WishlistScreen extends StatelessWidget {
               padding: const EdgeInsets.all(16),
               child: Row(
                 children: [
-                  Icon(
-                    Icons.favorite,
-                    color: AppColors.primary,
-                    size: 20,
-                  ),
+                  Icon(Icons.favorite, color: AppColors.primary, size: 20),
                   const SizedBox(width: 8),
                   Text(
                     '${wishlistController.wishlistCount} items',
@@ -148,6 +151,7 @@ class WishlistScreen extends StatelessWidget {
                   const Spacer(),
                   if (wishlistController.wishlistItems.isNotEmpty)
                     CustomButton(
+                      key: const Key('move_all_to_cart_button'),
                       text: 'Move All to Cart',
                       onPressed: () => wishlistController.moveAllToCart(),
                       isOutlined: true,
@@ -157,7 +161,7 @@ class WishlistScreen extends StatelessWidget {
                 ],
               ),
             ),
-            
+
             // Wishlist Items Grid
             Expanded(
               child: RefreshIndicator(
@@ -194,7 +198,10 @@ class WishlistScreen extends StatelessWidget {
     );
   }
 
-  void _showClearWishlistDialog(BuildContext context, WishlistController controller) {
+  void _showClearWishlistDialog(
+    BuildContext context,
+    WishlistController controller,
+  ) {
     Get.dialog(
       AlertDialog(
         title: Text(
@@ -267,7 +274,7 @@ class WishlistProductCard extends StatelessWidget {
               Get.toNamed('/product-detail', arguments: product.id);
             },
           ),
-          
+
           // Action Buttons
           Padding(
             padding: const EdgeInsets.all(8),
@@ -291,7 +298,9 @@ class WishlistProductCard extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: AppColors.error.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(6),
-                      border: Border.all(color: AppColors.error.withOpacity(0.3)),
+                      border: Border.all(
+                        color: AppColors.error.withOpacity(0.3),
+                      ),
                     ),
                     child: const Icon(
                       Icons.delete_outline,

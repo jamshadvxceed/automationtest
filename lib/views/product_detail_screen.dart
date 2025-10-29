@@ -20,7 +20,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   final ProductController _productController = Get.find<ProductController>();
   final CartController _cartController = Get.find<CartController>();
   final WishlistController _wishlistController = Get.find<WishlistController>();
-  
+
   late String productId;
   ProductModel? product;
   String? selectedSize;
@@ -31,7 +31,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     super.initState();
     productId = Get.arguments as String;
     product = _productController.getProductById(productId);
-    
+
     // Set default selections
     if (product != null) {
       selectedSize = product!.sizes.isNotEmpty ? product!.sizes.first : null;
@@ -46,9 +46,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         appBar: AppBar(
           title: Text('Product Not Found', style: GoogleFonts.poppins()),
         ),
-        body: const Center(
-          child: Text('Product not found'),
-        ),
+        body: const Center(child: Text('Product not found')),
       );
     }
 
@@ -78,11 +76,16 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             actions: [
               Obx(() {
                 final isFavorite = _productController.allProducts
-                    .firstWhere((p) => p.id == product!.id, orElse: () => product!)
+                    .firstWhere(
+                      (p) => p.id == product!.id,
+                      orElse: () => product!,
+                    )
                     .isFavorite;
-                
+
                 return IconButton(
-                  onPressed: () => _productController.toggleFavorite(product!.id),
+                  key: Key('favorite_button_detail_${product!.id}'),
+                  onPressed: () =>
+                      _productController.toggleFavorite(product!.id),
                   icon: Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
@@ -91,7 +94,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     ),
                     child: Icon(
                       isFavorite ? Icons.favorite : Icons.favorite_border,
-                      color: isFavorite ? AppColors.primary : AppColors.textPrimary,
+                      color: isFavorite
+                          ? AppColors.primary
+                          : AppColors.textPrimary,
                     ),
                   ),
                 );
@@ -111,10 +116,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     color: Colors.white.withOpacity(0.9),
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(
-                    Icons.share,
-                    color: AppColors.textPrimary,
-                  ),
+                  child: const Icon(Icons.share, color: AppColors.textPrimary),
                 ),
               ),
             ],
@@ -144,7 +146,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               ),
             ),
           ),
-          
+
           // Product Details
           SliverToBoxAdapter(
             child: Container(
@@ -176,7 +178,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ),
                     ),
                     const SizedBox(height: 12),
-                    
+
                     // Price and Rating
                     Row(
                       children: [
@@ -200,7 +202,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           ),
                           const SizedBox(width: 8),
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 4,
+                            ),
                             decoration: BoxDecoration(
                               color: AppColors.discount,
                               borderRadius: BorderRadius.circular(4),
@@ -217,7 +222,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         ],
                         const Spacer(),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 4,
+                          ),
                           decoration: BoxDecoration(
                             color: AppColors.rating,
                             borderRadius: BorderRadius.circular(4),
@@ -244,7 +252,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ],
                     ),
                     const SizedBox(height: 24),
-                    
+
                     // Size Selection
                     if (product!.sizes.isNotEmpty) ...[
                       Text(
@@ -261,24 +269,36 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         children: product!.sizes.map((size) {
                           final isSelected = selectedSize == size;
                           return GestureDetector(
+                            key: Key(
+                              'size_${size.toLowerCase().replaceAll(' ', '_')}',
+                            ),
                             onTap: () {
                               setState(() {
                                 selectedSize = size;
                               });
                             },
                             child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 8,
+                              ),
                               decoration: BoxDecoration(
-                                color: isSelected ? AppColors.primary : AppColors.surface,
+                                color: isSelected
+                                    ? AppColors.primary
+                                    : AppColors.surface,
                                 borderRadius: BorderRadius.circular(8),
                                 border: Border.all(
-                                  color: isSelected ? AppColors.primary : AppColors.border,
+                                  color: isSelected
+                                      ? AppColors.primary
+                                      : AppColors.border,
                                 ),
                               ),
                               child: Text(
                                 size,
                                 style: GoogleFonts.poppins(
-                                  color: isSelected ? Colors.white : AppColors.textPrimary,
+                                  color: isSelected
+                                      ? Colors.white
+                                      : AppColors.textPrimary,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -288,7 +308,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ),
                       const SizedBox(height: 20),
                     ],
-                    
+
                     // Color Selection
                     if (product!.colors.isNotEmpty) ...[
                       Text(
@@ -305,24 +325,36 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         children: product!.colors.map((color) {
                           final isSelected = selectedColor == color;
                           return GestureDetector(
+                            key: Key(
+                              'color_${color.toLowerCase().replaceAll(' ', '_')}',
+                            ),
                             onTap: () {
                               setState(() {
                                 selectedColor = color;
                               });
                             },
                             child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 8,
+                              ),
                               decoration: BoxDecoration(
-                                color: isSelected ? AppColors.primary : AppColors.surface,
+                                color: isSelected
+                                    ? AppColors.primary
+                                    : AppColors.surface,
                                 borderRadius: BorderRadius.circular(8),
                                 border: Border.all(
-                                  color: isSelected ? AppColors.primary : AppColors.border,
+                                  color: isSelected
+                                      ? AppColors.primary
+                                      : AppColors.border,
                                 ),
                               ),
                               child: Text(
                                 color,
                                 style: GoogleFonts.poppins(
-                                  color: isSelected ? Colors.white : AppColors.textPrimary,
+                                  color: isSelected
+                                      ? Colors.white
+                                      : AppColors.textPrimary,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -332,7 +364,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ),
                       const SizedBox(height: 20),
                     ],
-                    
+
                     // Description
                     Text(
                       'Description',
@@ -359,7 +391,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           ),
         ],
       ),
-      
+
       // Bottom Action Buttons
       bottomNavigationBar: Container(
         padding: const EdgeInsets.all(16),
@@ -375,6 +407,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           ],
         ),
         child: CustomButton(
+          key: const Key('add_to_cart_button'),
           text: 'Add to Cart',
           onPressed: () {
             _cartController.addToCart(

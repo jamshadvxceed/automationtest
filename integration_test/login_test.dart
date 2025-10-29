@@ -2,6 +2,7 @@ import 'package:automationtest/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:patrol/patrol.dart';
+import 'test_keys.dart';
 
 // Function to be called by orchestrator
 Future<void> runLoginTest(PatrolIntegrationTester $) async {
@@ -12,27 +13,35 @@ Future<void> runLoginTest(PatrolIntegrationTester $) async {
   await $.pumpAndSettle(timeout: const Duration(seconds: 5));
 
   // Verify we're on the login screen
+  $.log('💳 Proceeding to VXCEED Sales');
   expect($('Welcome Back!'), findsOneWidget);
   expect($('Sign in to continue shopping'), findsOneWidget);
 
-  // Enter valid email (first TextFormField)
-  await $(TextFormField).at(0).enterText('user@vxceed.com');
+  // Enter valid email using key-based finding
+  await $(find.byKey(TestKeys.emailField)).enterText('user@vxceed.com');
   await $.pumpAndSettle();
 
-  // Enter valid password (second TextFormField)
-  await $(TextFormField).at(1).enterText('password123');
+  // Enter valid password using key-based finding
+  await $(find.byKey(TestKeys.passwordField)).enterText('password123');
   await $.pumpAndSettle();
 
-  // Tap the Login button
-  await $('Login').tap();
+  // Tap the Login button using key-based finding
+  await $(find.byKey(TestKeys.loginButton)).tap();
 
-  // Wait for login process and navigation
-  await $.pumpAndSettle(timeout: const Duration(seconds: 5));
+  // Additional wait for controllers to initialize
+  await Future.delayed(const Duration(seconds: 3));
+  await $.pumpAndSettle();
 
   // Verify successful login - should navigate to home screen
+  // Check for the bottom navigation bar itself (more reliable)
+  expect($(find.byKey(TestKeys.bottomNavigationBar)), findsOneWidget);
+  $.log('💳 Proceeding to Shopping');
+
+  // Verify navigation items by text (more reliable than individual icon keys)
   expect($('Home'), findsOneWidget);
   expect($('Wishlist'), findsOneWidget);
   expect($('Cart'), findsOneWidget);
+  expect($('Profile'), findsOneWidget);
 }
 
 void main() {

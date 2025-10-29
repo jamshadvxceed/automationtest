@@ -18,55 +18,61 @@ class CartScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Shopping Cart',
-          style: GoogleFonts.poppins(
-            fontWeight: FontWeight.w600,
-          ),
+          style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
         ),
         actions: [
-          Obx(() => cartController.cartItems.isNotEmpty
-              ? TextButton(
-                  onPressed: () {
-                    Get.dialog(
-                      AlertDialog(
-                        title: Text(
-                          'Clear Cart',
-                          style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
-                        ),
-                        content: Text(
-                          'Are you sure you want to remove all items from your cart?',
-                          style: GoogleFonts.poppins(),
-                        ),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Get.back(),
-                            child: Text(
-                              'Cancel',
-                              style: GoogleFonts.poppins(color: AppColors.textSecondary),
+          Obx(
+            () => cartController.cartItems.isNotEmpty
+                ? TextButton(
+                    onPressed: () {
+                      Get.dialog(
+                        AlertDialog(
+                          title: Text(
+                            'Clear Cart',
+                            style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
-                          TextButton(
-                            onPressed: () {
-                              cartController.clearCart();
-                              Get.back();
-                            },
-                            child: Text(
-                              'Clear',
-                              style: GoogleFonts.poppins(color: AppColors.error),
-                            ),
+                          content: Text(
+                            'Are you sure you want to remove all items from your cart?',
+                            style: GoogleFonts.poppins(),
                           ),
-                        ],
+                          actions: [
+                            TextButton(
+                              onPressed: () => Get.back(),
+                              child: Text(
+                                'Cancel',
+                                style: GoogleFonts.poppins(
+                                  color: AppColors.textSecondary,
+                                ),
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                cartController.clearCart();
+                                Get.back();
+                              },
+                              child: Text(
+                                'Clear',
+                                style: GoogleFonts.poppins(
+                                  color: AppColors.error,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                    child: Text(
+                      'Clear',
+                      style: GoogleFonts.poppins(
+                        color: AppColors.error,
+                        fontWeight: FontWeight.w500,
                       ),
-                    );
-                  },
-                  child: Text(
-                    'Clear',
-                    style: GoogleFonts.poppins(
-                      color: AppColors.error,
-                      fontWeight: FontWeight.w500,
                     ),
-                  ),
-                )
-              : const SizedBox()),
+                  )
+                : const SizedBox(),
+          ),
         ],
       ),
       body: Obx(() {
@@ -130,7 +136,7 @@ class CartScreen extends StatelessWidget {
                 },
               ),
             ),
-            
+
             // Cart Summary
             Container(
               padding: const EdgeInsets.all(16),
@@ -193,7 +199,8 @@ class CartScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  if (cartController.subtotal.value < 1999 && cartController.subtotal.value > 0) ...[
+                  if (cartController.subtotal.value < 1999 &&
+                      cartController.subtotal.value > 0) ...[
                     const SizedBox(height: 4),
                     Text(
                       'Add ₹${(1999 - cartController.subtotal.value).toInt()} more for FREE delivery',
@@ -228,6 +235,7 @@ class CartScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   CustomButton(
+                    key: const Key('proceed_to_checkout_button'),
                     text: 'Proceed to Checkout',
                     onPressed: () async {
                       final success = await cartController.checkout();
@@ -273,6 +281,7 @@ class CartItemCard extends StatelessWidget {
     final CartController cartController = Get.find<CartController>();
 
     return Container(
+      key: Key('cart_item_${cartItem.product.id}'),
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -320,7 +329,7 @@ class CartItemCard extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 12),
-          
+
           // Product Details
           Expanded(
             child: Column(
@@ -393,6 +402,7 @@ class CartItemCard extends StatelessWidget {
                     Row(
                       children: [
                         GestureDetector(
+                          key: Key('quantity_decrease_${cartItem.product.id}'),
                           onTap: () => cartController.decreaseQuantity(index),
                           child: Container(
                             width: 32,
@@ -422,6 +432,7 @@ class CartItemCard extends StatelessWidget {
                           ),
                         ),
                         GestureDetector(
+                          key: Key('quantity_increase_${cartItem.product.id}'),
                           onTap: () => cartController.increaseQuantity(index),
                           child: Container(
                             width: 32,
@@ -444,14 +455,12 @@ class CartItemCard extends StatelessWidget {
               ],
             ),
           ),
-          
+
           // Remove Button
           IconButton(
+            key: Key('remove_cart_item_${cartItem.product.id}'),
             onPressed: onRemove,
-            icon: const Icon(
-              Icons.delete_outline,
-              color: AppColors.error,
-            ),
+            icon: const Icon(Icons.delete_outline, color: AppColors.error),
           ),
         ],
       ),

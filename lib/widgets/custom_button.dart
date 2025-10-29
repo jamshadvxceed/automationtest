@@ -17,7 +17,7 @@ class CustomButton extends StatelessWidget {
   final FontWeight fontWeight;
 
   const CustomButton({
-    super.key,
+    Key? key,
     required this.text,
     this.onPressed,
     this.isLoading = false,
@@ -30,14 +30,15 @@ class CustomButton extends StatelessWidget {
     this.icon,
     this.fontSize = 16,
     this.fontWeight = FontWeight.w600,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final Color bgColor = backgroundColor ?? 
+    final Color bgColor =
+        backgroundColor ??
         (isOutlined ? Colors.transparent : AppColors.primary);
-    final Color txtColor = textColor ?? 
-        (isOutlined ? AppColors.primary : Colors.white);
+    final Color txtColor =
+        textColor ?? (isOutlined ? AppColors.primary : Colors.white);
 
     return SizedBox(
       width: width,
@@ -50,7 +51,7 @@ class CustomButton extends StatelessWidget {
           elevation: isOutlined ? 0 : 2,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadius),
-            side: isOutlined 
+            side: isOutlined
                 ? BorderSide(color: AppColors.primary, width: 1.5)
                 : BorderSide.none,
           ),
@@ -133,9 +134,7 @@ class CustomIconButton extends StatelessWidget {
       ),
     );
 
-    return tooltip != null
-        ? Tooltip(message: tooltip!, child: button)
-        : button;
+    return tooltip != null ? Tooltip(message: tooltip!, child: button) : button;
   }
 }
 
@@ -148,14 +147,14 @@ class CustomTextButton extends StatelessWidget {
   final TextDecoration? decoration;
 
   const CustomTextButton({
-    super.key,
+    Key? key,
     required this.text,
     this.onPressed,
     this.textColor,
     this.fontSize = 14,
     this.fontWeight = FontWeight.w500,
     this.decoration,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -15,16 +15,15 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final AuthController authController = Get.find<AuthController>();
     final CartController cartController = Get.find<CartController>();
-    final WishlistController wishlistController = Get.find<WishlistController>();
+    final WishlistController wishlistController =
+        Get.find<WishlistController>();
 
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
         title: Text(
           'Profile',
-          style: GoogleFonts.poppins(
-            fontWeight: FontWeight.w600,
-          ),
+          style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
         ),
         automaticallyImplyLeading: false,
       ),
@@ -66,157 +65,136 @@ class ProfileScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    child: Obx(() => Center(
-                      child: Text(
-                        authController.userName.value.isNotEmpty
-                            ? authController.userName.value[0].toUpperCase()
-                            : 'U',
-                        style: GoogleFonts.poppins(
-                          fontSize: 32,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                    child: Obx(
+                      () => Center(
+                        child: Text(
+                          authController.userName.value.isNotEmpty
+                              ? authController.userName.value[0].toUpperCase()
+                              : 'U',
+                          style: GoogleFonts.poppins(
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
-                    )),
+                    ),
                   ),
                   const SizedBox(height: 16),
-                  
+
                   // User Info
-                  Obx(() => Column(
-                    children: [
-                      Text(
-                        authController.userName.value.isNotEmpty
-                            ? authController.userName.value
-                            : 'John Doe',
-                        style: GoogleFonts.poppins(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.textPrimary,
+                  Obx(
+                    () => Column(
+                      children: [
+                        Text(
+                          authController.userName.value.isNotEmpty
+                              ? authController.userName.value
+                              : 'John Doe',
+                          style: GoogleFonts.poppins(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.textPrimary,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        authController.userEmail.value.isNotEmpty
-                            ? authController.userEmail.value
-                            : 'user@vxceed.com',
-                        style: GoogleFonts.poppins(
-                          fontSize: 14,
-                          color: AppColors.textSecondary,
+                        const SizedBox(height: 4),
+                        Text(
+                          authController.userEmail.value.isNotEmpty
+                              ? authController.userEmail.value
+                              : 'user@vxceed.com',
+                          style: GoogleFonts.poppins(
+                            fontSize: 14,
+                            color: AppColors.textSecondary,
+                          ),
                         ),
-                      ),
-                    ],
-                  )),
+                      ],
+                    ),
+                  ),
                   const SizedBox(height: 16),
-                  
+
                   // Stats Row
-                  Obx(() => Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      _buildStatItem(
-                        'Cart Items',
-                        cartController.totalItems.value.toString(),
-                        Icons.shopping_cart,
-                      ),
-                      Container(
-                        width: 1,
-                        height: 40,
-                        color: AppColors.border,
-                      ),
-                      _buildStatItem(
-                        'Wishlist',
-                        wishlistController.wishlistCount.toString(),
-                        Icons.favorite,
-                      ),
-                      Container(
-                        width: 1,
-                        height: 40,
-                        color: AppColors.border,
-                      ),
-                      _buildStatItem(
-                        'Orders',
-                        '0',
-                        Icons.shopping_bag,
-                      ),
-                    ],
-                  )),
+                  Obx(
+                    () => Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        _buildStatItem(
+                          'Cart Items',
+                          cartController.totalItems.value.toString(),
+                          Icons.shopping_cart,
+                        ),
+                        Container(
+                          width: 1,
+                          height: 40,
+                          color: AppColors.border,
+                        ),
+                        _buildStatItem(
+                          'Wishlist',
+                          wishlistController.wishlistCount.toString(),
+                          Icons.favorite,
+                        ),
+                        Container(
+                          width: 1,
+                          height: 40,
+                          color: AppColors.border,
+                        ),
+                        _buildStatItem('Orders', '0', Icons.shopping_bag),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
             const SizedBox(height: 24),
-            
+
             // Menu Items
             _buildMenuSection([
-              _buildMenuItem(
-                'My Orders',
-                Icons.shopping_bag_outlined,
-                () {
-                  Get.snackbar(
-                    'My Orders',
-                    'This feature would show order history',
-                    snackPosition: SnackPosition.BOTTOM,
-                  );
-                },
-              ),
-              _buildMenuItem(
-                'Address Book',
-                Icons.location_on_outlined,
-                () {
-                  Get.snackbar(
-                    'Address Book',
-                    'This feature would manage delivery addresses',
-                    snackPosition: SnackPosition.BOTTOM,
-                  );
-                },
-              ),
-              _buildMenuItem(
-                'Payment Methods',
-                Icons.payment_outlined,
-                () {
-                  Get.snackbar(
-                    'Payment Methods',
-                    'This feature would manage payment options',
-                    snackPosition: SnackPosition.BOTTOM,
-                  );
-                },
-              ),
+              _buildMenuItem('My Orders', Icons.shopping_bag_outlined, () {
+                Get.snackbar(
+                  'My Orders',
+                  'This feature would show order history',
+                  snackPosition: SnackPosition.BOTTOM,
+                );
+              }),
+              _buildMenuItem('Address Book', Icons.location_on_outlined, () {
+                Get.snackbar(
+                  'Address Book',
+                  'This feature would manage delivery addresses',
+                  snackPosition: SnackPosition.BOTTOM,
+                );
+              }),
+              _buildMenuItem('Payment Methods', Icons.payment_outlined, () {
+                Get.snackbar(
+                  'Payment Methods',
+                  'This feature would manage payment options',
+                  snackPosition: SnackPosition.BOTTOM,
+                );
+              }),
             ]),
             const SizedBox(height: 16),
-            
+
             _buildMenuSection([
-              _buildMenuItem(
-                'Notifications',
-                Icons.notifications_outlined,
-                () {
-                  Get.snackbar(
-                    'Notifications',
-                    'This feature would manage notification settings',
-                    snackPosition: SnackPosition.BOTTOM,
-                  );
-                },
-              ),
-              _buildMenuItem(
-                'Help & Support',
-                Icons.help_outline,
-                () {
-                  Get.snackbar(
-                    'Help & Support',
-                    'This feature would provide customer support',
-                    snackPosition: SnackPosition.BOTTOM,
-                  );
-                },
-              ),
-              _buildMenuItem(
-                'About',
-                Icons.info_outline,
-                () {
-                  _showAboutDialog(context);
-                },
-              ),
+              _buildMenuItem('Notifications', Icons.notifications_outlined, () {
+                Get.snackbar(
+                  'Notifications',
+                  'This feature would manage notification settings',
+                  snackPosition: SnackPosition.BOTTOM,
+                );
+              }),
+              _buildMenuItem('Help & Support', Icons.help_outline, () {
+                Get.snackbar(
+                  'Help & Support',
+                  'This feature would provide customer support',
+                  snackPosition: SnackPosition.BOTTOM,
+                );
+              }),
+              _buildMenuItem('About', Icons.info_outline, () {
+                _showAboutDialog(context);
+              }),
             ]),
             const SizedBox(height: 24),
-            
+
             // Logout Button
             CustomButton(
+              key: const Key('logout_button'),
               text: 'Logout',
               onPressed: () {
                 _showLogoutDialog(context, authController);
@@ -227,7 +205,7 @@ class ProfileScreen extends StatelessWidget {
               icon: Icons.logout,
             ),
             const SizedBox(height: 16),
-            
+
             // App Version
             Text(
               'Version 1.0.0',
@@ -245,11 +223,7 @@ class ProfileScreen extends StatelessWidget {
   Widget _buildStatItem(String label, String value, IconData icon) {
     return Column(
       children: [
-        Icon(
-          icon,
-          color: AppColors.primary,
-          size: 20,
-        ),
+        Icon(icon, color: AppColors.primary, size: 20),
         const SizedBox(height: 4),
         Text(
           value,
@@ -284,19 +258,13 @@ class ProfileScreen extends StatelessWidget {
           ),
         ],
       ),
-      child: Column(
-        children: items,
-      ),
+      child: Column(children: items),
     );
   }
 
   Widget _buildMenuItem(String title, IconData icon, VoidCallback onTap) {
     return ListTile(
-      leading: Icon(
-        icon,
-        color: AppColors.textSecondary,
-        size: 22,
-      ),
+      leading: Icon(icon, color: AppColors.textSecondary, size: 22),
       title: Text(
         title,
         style: GoogleFonts.poppins(
@@ -397,13 +365,12 @@ class ProfileScreen extends StatelessWidget {
               '• Wishlist functionality',
               '• User authentication',
               '• Responsive design',
-            ].map((feature) => Padding(
-              padding: const EdgeInsets.only(bottom: 4),
-              child: Text(
-                feature,
-                style: GoogleFonts.poppins(fontSize: 12),
+            ].map(
+              (feature) => Padding(
+                padding: const EdgeInsets.only(bottom: 4),
+                child: Text(feature, style: GoogleFonts.poppins(fontSize: 12)),
               ),
-            )),
+            ),
             const SizedBox(height: 16),
             Text(
               'Built with Flutter & GetX',

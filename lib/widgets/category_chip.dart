@@ -17,6 +17,7 @@ class CategoryChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      key: Key('category_${label.toLowerCase().replaceAll(' ', '_')}'),
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
@@ -68,6 +69,7 @@ class CategoryChipList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      key: const Key('category_chips'),
       height: 50,
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: ListView.builder(

@@ -111,6 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 8),
                 TextFormField(
+                  key: const Key('email_field'),
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
                   validator: _authController.validateEmail,
@@ -157,6 +158,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 8),
                 TextFormField(
+                  key: const Key('password_field'),
                   controller: _passwordController,
                   obscureText: _obscurePassword,
                   validator: _authController.validatePassword,
@@ -168,6 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       color: AppColors.textSecondary,
                     ),
                     suffixIcon: IconButton(
+                      key: const Key('password_visibility_toggle'),
                       icon: Icon(
                         _obscurePassword
                             ? Icons.visibility_off
@@ -208,6 +211,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 // Login Button
                 Obx(
                   () => CustomButton(
+                    key: const Key('login_button'),
                     text: 'Login',
                     onPressed: _handleLogin,
                     isLoading: _authController.isLoading.value,
@@ -220,6 +224,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 // Forgot Password
                 Center(
                   child: CustomTextButton(
+                    key: const Key('forgot_password_button'),
                     text: 'Forgot Password?',
                     onPressed: () {
                       Get.snackbar(
@@ -245,6 +250,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       CustomTextButton(
+                        key: const Key('signup_button'),
                         text: 'Sign Up',
                         onPressed: () {
                           Get.snackbar(
