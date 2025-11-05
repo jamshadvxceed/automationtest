@@ -2,7 +2,7 @@ import 'package:automationtest/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:patrol/patrol.dart';
-import 'test_keys.dart';
+import 'package:automationtest/utils/test_keys.dart';
 
 // Function to be called by orchestrator
 Future<void> runLoginTest(PatrolIntegrationTester $) async {
@@ -18,15 +18,15 @@ Future<void> runLoginTest(PatrolIntegrationTester $) async {
   expect($('Sign in to continue shopping'), findsOneWidget);
 
   // Enter valid email using key-based finding
-  await $(find.byKey(TestKeys.emailField)).enterText('user@vxceed.com');
+  await $(TestKeys.emailField).enterText('user@vxceed.com');
   await $.pumpAndSettle();
 
   // Enter valid password using key-based finding
-  await $(find.byKey(TestKeys.passwordField)).enterText('password123');
+  await $(TestKeys.passwordField).enterText('password123');
   await $.pumpAndSettle();
 
   // Tap the Login button using key-based finding
-  await $(find.byKey(TestKeys.loginButton)).tap();
+  await $(TestKeys.loginButton).tap();
 
   // Additional wait for controllers to initialize
   await Future.delayed(const Duration(seconds: 3));
@@ -34,7 +34,7 @@ Future<void> runLoginTest(PatrolIntegrationTester $) async {
 
   // Verify successful login - should navigate to home screen
   // Check for the bottom navigation bar itself (more reliable)
-  expect($(find.byKey(TestKeys.bottomNavigationBar)), findsOneWidget);
+  expect($(TestKeys.bottomNavigationBar), findsOneWidget);
   $.log('💳 Proceeding to Shopping');
 
   // Verify navigation items by text (more reliable than individual icon keys)

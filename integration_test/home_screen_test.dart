@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:patrol/patrol.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'test_keys.dart';
+import 'package:automationtest/utils/test_keys.dart';
 
 Future<void> runHomeScreenTest(PatrolIntegrationTester $) async {
   // --- Step 0: Wait for home screen ---
